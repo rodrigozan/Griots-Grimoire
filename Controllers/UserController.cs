@@ -1,85 +1,88 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Bson;
+using System.Collections.Generic;
 
 [Route("api/[controller]")]
 [ApiController]
-public class UsuariosController : ControllerBase
+public class UserController : ControllerBase
 {
-    private readonly IMongoDatabase _database;
-    private readonly IMongoCollection<Usuario> _usuariosCollection;
+    private readonly IMongoCollection<UserModel> _userCollection;
 
-    public UsuariosController(IMongoClient mongoClient)
+    public UserController(IMongoClient mongoClient)
     {
-        _database = mongoClient.GetDatabase("GriotsGrimoire");
-        _usuariosCollection = _database.GetCollection<Usuario>("Usuarios");
+        var database = mongoClient.GetDatabase("GriotsGrimoire");
+        _userCollection = database.GetCollection<UserModel>("Users");
     }
 
-    // GET: api/Usuarios
+    // GET: api/User
     [HttpGet]
-    public IEnumerable<Usuario> Get()
+    public IEnumerable<UserModel> Get()
     {
-        return _usuariosCollection.Find(new BsonDocument()).ToList();
+        return _userCollection.Find(new BsonDocument()).ToList();
     }
 
-    // GET: api/Usuarios/5
-    [HttpGet("{id}", Name = "GetUsuario")]
-    public Usuario Get(int id)
+    // GET: api/User/123abc
+    [HttpGet("{id}", Name = "GetUser")]
+    public ActionResult<UserModel> Get(string id)
     {
-        return _usuariosCollection.Find(u => u.Id == id).FirstOrDefault();
+        var objectId = ObjectId.Parse(id);
+        var user = _userCollection.Find(u => u.Id == objectId).FirstOrDefault();
+        if (user == null)
+        {
+            return NotFound();
+        }
+        return user;
     }
 
-    // POST: api/Usuarios
+    // POST: api/User
     [HttpPost]
-    public IActionResult Post([FromBody] Usuario usuario)
+    public IActionResult Post([FromBody] UserModel user)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        usuario.Id = _usuariosCollection.AsQueryable().Count() + 1;
-        usuario.DataCadastro = DateTime.Now;
-        _usuariosCollection.InsertOne(usuario);
-
-        return CreatedAtRoute("GetUsuario", new { id = usuario.Id }, usuario);
+        _userCollection.InsertOne(user);
+        return CreatedAtRoute("GetUser", new { id = user.Id }, user);
     }
 
-    // PUT: api/Usuarios/5
+    // PUT: api/User/5
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] Usuario usuario)
+    public IActionResult Put(string id, [FromBody] UserModel user)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        var filter = Builders<Usuario>.Filter.Eq(u => u.Id, id);
-        var update = Builders<Usuario>.Update
-            .Set(u => u.Name, usuario.Name)
-            .Set(u => u.Email, usuario.Email)
-            .Set(u => u.Password, usuario.Password)
-            .Set(u => u.Sexo, usuario.Sexo)
-            .Set(u => u.DataNascimento, usuario.DataNascimento)
-            .Set(u => u.Role, usuario.Role)
-            .Set(u => u.DataAtualizacaoCadastro, DateTime.Now);
+        var objectId = ObjectId.Parse(id);
+        var filter = Builders<UserModel>.Filter.Eq(u => u.Id, objectId);
+        var update = Builders<UserModel>.Update
+            .Set(u => u.Name, user.Name)
+            .Set(u => u.Email, user.Email)
+            .Set(u => u.Password, user.Password)
+            .Set(u => u.Sex, user.Sex)
+            .Set(u => u.DateOfBirth, user.DateOfBirth)
+            .Set(u => u.RegisterUpdate, DateTime.Now)
+            .Set(u => u.Role, user.Role);
 
-        var result = _usuariosCollection.UpdateOne(filter, update);
+        var result = _userCollection.UpdateOne(filter, update);
         if (result.ModifiedCount == 0)
         {
             return NotFound();
         }
 
-        return NoContent();
+        return Ok(result);
     }
 
-    // DELETE: api/Usuarios/5
+    // DELETE: api/User/5
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public IActionResult Delete(string id)
     {
-        var result = _usuariosCollection.DeleteOne(u => u.Id == id);
+        var objectId = ObjectId.Parse(id);
+        var result = _userCollection.DeleteOne(u => u.Id == objectId);
         if (result.DeletedCount == 0)
         {
             return NotFound();

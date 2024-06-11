@@ -1,23 +1,27 @@
+using System;
 using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
-public class Usuario
+public class UserModel
 {
 
-
-    public Usuario(int id, string name, string email, string password, char sexo, DateTime dataNascimento, string role, DateTime dataCadastro, DateTime dataAtualizacaoCadastro)
+    public UserModel(string name, string email, string password, char sex, DateTime dateOfBirth, string role, DateTime registerDate, DateTime registerUpdate)
     {
-        this.Id = id;
+        this.Id = ObjectId.GenerateNewId();
         this.Name = name;
         this.Email = email;
         this.Password = password;
-        this.Sexo = sexo;
-        this.DataNascimento = dataNascimento;
+        this.Sex = sex;
+        this.DateOfBirth = dateOfBirth;
+        this.RegisterDate = DateTime.Now;
+        this.RegisterUpdate = DateTime.Now;
         this.Role = role;
-        this.DataCadastro = DateTime.Now;
-        this.DataAtualizacaoCadastro = DateTime.Now;
 
     }
-    public int Id { get; set; }
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public ObjectId Id { get; set; }
 
     [Required]
     public string Name { get; set; }
@@ -29,18 +33,16 @@ public class Usuario
     public string Password { get; set; }
 
     [Required]
-    public char Sexo { get; set; }
+    public char Sex { get; set; }
 
     [Required]
-    public DateTime DataNascimento { get; set; }
+    public DateTime DateOfBirth { get; set; }
 
     [Required]
     public string Role { get; set; } // Usar enum para os papéis    
 
-    [Required]
-    public DateTime DataCadastro { get; set; }
+    public DateTime RegisterDate { get; set; }
 
-    public DateTime DataAtualizacaoCadastro { get; set; }
-
+    public DateTime RegisterUpdate { get; set; }
 
 }
