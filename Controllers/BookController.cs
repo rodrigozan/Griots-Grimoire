@@ -64,13 +64,18 @@ public class BookController : ControllerBase
             .Set(b => b.Title, book.Title)
             .Set(b => b.WriterId, book.WriterId)
             .Set(b => b.CoWritersId, book.CoWritersId)
-            .Set(b => b.WorldbuildingId, book.WorldbuildingId)
-            .Set(b => b.CharactersId, book.CharactersId)
-            .Set(b => b.TargetAudience, book.TargetAudience)
-            .Set(b => b.MarketShare, book.MarketShare)
             .Set(b => b.Genrer, book.Genrer)
             .Set(b => b.Style, book.Style)
+            .Set(b => b.TargetAudience, book.TargetAudience)
+            .Set(b => b.MarketShare, book.MarketShare)
             .Set(b => b.FirstResume, book.FirstResume)
+            .Set(b => b.WorldBuildingId, book.WorldBuildingId)
+            .Set(b => b.CharactersId, book.CharactersId)    
+            .Set(b => b.SecondResume, book.SecondResume)   
+            .Set(b => b.ThreeActsStructure, book.ThreeActsStructure)        
+            .Set(b => b.TramaPoints, book.TramaPoints)   
+            .Set(b => b.ThirdResume, book.ThirdResume)       
+            .Set(b => b.Scenes, book.Scenes)             
             .Set(b => b.UpdateDate, DateTime.Now);
 
         var result = _bookCollection.UpdateOne(filter, update);
@@ -81,7 +86,6 @@ public class BookController : ControllerBase
 
         return Ok(result);
     }
-
 
     // DELETE: api/Book/5
     [HttpDelete("{id}")]
