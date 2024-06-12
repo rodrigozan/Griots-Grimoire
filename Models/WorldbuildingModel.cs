@@ -8,7 +8,7 @@ public class WordBuildingModel
 {
     public WordBuildingModel(string worldName, string description, List<Races> races, List<string> languages, List<Locations> locations, List<string> cultures, List<MagicSystems> magicSystems, List<string> technologies, List<string> history, List<string> religions, List<string> creatures, List<string> organizations, List<string> importantFigures, List<string> events, List<string> artifacts, List<string> books, List<string> miscellaneous)
     {
-        this.Id = ObjectId.GenerateNewId().ToString();
+        this.Id = ObjectId.GenerateNewId();
         this.WorldName = worldName;
         this.Description = description;
         this.Races = races;
@@ -31,7 +31,7 @@ public class WordBuildingModel
 
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string Id { get; set; }
+    public ObjectId Id { get; set; }
 
     public string WorldName { get; set; }
 
