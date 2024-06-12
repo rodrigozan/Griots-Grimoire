@@ -15,12 +15,14 @@ public class WorldbuildingController : ControllerBase
         _wordBuildingCollection = database.GetCollection<WordBuildingModel>("WordBuilding");
     }
 
+    // GET: api/WordBuilding
     [HttpGet]
     public ActionResult<List<WordBuildingModel>> Get()
     {
         return _wordBuildingCollection.Find(world => true).ToList();
     }
 
+    // GET: api/WordBuilding/5
     [HttpGet("{id}", Name = "GetWordBuilding")]
     public ActionResult<WordBuildingModel> Get(string id)
     {
@@ -33,6 +35,7 @@ public class WorldbuildingController : ControllerBase
         return worldbuilding;
     }
 
+    // POST: api/WordBuilding
     [HttpPost]
     public ActionResult<WordBuildingModel> Create(WordBuildingModel worldbuilding)
     {
@@ -40,6 +43,7 @@ public class WorldbuildingController : ControllerBase
         return CreatedAtRoute("GetWordBuilding", new { id = worldbuilding.Id.ToString() }, worldbuilding);
     }
 
+    // PUT: api/WordBuilding/5
     [HttpPut("{id:length(24)}")]
     public IActionResult Update(string id, WordBuildingModel worldbuildingIn)
     {
@@ -74,6 +78,7 @@ public class WorldbuildingController : ControllerBase
         return Ok(result);
     }
 
+    // DELETE: api/WordBuilding/5
     [HttpDelete("{id}")]
     public IActionResult Delete(string id)
     {
