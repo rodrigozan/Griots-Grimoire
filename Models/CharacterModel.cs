@@ -6,7 +6,6 @@ public class CharacterModel
 {
 
     public CharacterModel(
-        ObjectId id,  
         List<string> bookId,
         string worldBuildingId,
         string nome, 
@@ -34,7 +33,7 @@ public class CharacterModel
         string notas
     )
     {
-        this.Id = id;
+        this.Id = ObjectId.GenerateNewId();
         this.BookId = bookId;
         this.WorldBuildingId = worldBuildingId; 
         this.Nome = nome;
