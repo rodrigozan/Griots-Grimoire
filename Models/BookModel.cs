@@ -10,14 +10,14 @@ public class BookModel
         string title, 
         string initialIdea,
         string writerId, 
-        string coWritersId, 
+        List<string> coWritersId, 
         string genrer, 
         string style, 
         string targetAudience, 
         string marketShare, 
         string firstResume, 
         string worldBuildingId, 
-        string charactersId, 
+        List<string> charactersId, 
         string secondResume, 
         List<string> threeActsStructure,
         List<string> tramaPoints,
@@ -63,7 +63,7 @@ public class BookModel
     public string WriterId { get; set; }
 
     [BsonRepresentation(BsonType.ObjectId)]
-    public string CoWritersId { get; set; }
+    public List<string> CoWritersId { get; set; }
 
     [Required]
     public string Genrer { get; set; }
@@ -82,7 +82,7 @@ public class BookModel
     public string WorldBuildingId { get; set; }
 
     [BsonRepresentation(BsonType.ObjectId)]
-    public string CharactersId { get; set; }
+    public List<string> CharactersId { get; set; }
 
     public string SecondResume { get; set; }
 
