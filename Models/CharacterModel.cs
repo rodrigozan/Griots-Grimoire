@@ -4,11 +4,39 @@ using System.Collections.Generic;
 
 public class CharacterModel
 {
-    public CharacterModel() {}
 
-    public CharacterModel(ObjectId id, string nome, int idade, string genero, string raca, double altura, double peso, string aparencia, string personalidade, string historico, string notas)
+    public CharacterModel(
+        ObjectId id,  
+        List<string> bookId,
+        string worldBuildingId,
+        string nome, 
+        int idade, 
+        string genero, 
+        string raca, 
+        double altura, 
+        double peso, 
+        string aparencia, 
+        string personalidade, 
+        string historico, 
+        List<string> habilidades,
+        List<string> equipamentos,
+        List<string> aliancas,
+        List<string> relacionamentos,
+        List<string> comportamentoDominante,
+        string objetivoPrincipal,
+        List<string> objetivos,
+        List<string> medos,
+        List<string> temperamento,
+        List<string> signos,
+        List<string> segredos,
+        List<string> forcas,
+        List<string> fraquezas,
+        string notas
+    )
     {
         this.Id = id;
+        this.BookId = bookId;
+        this.WorldBuildingId = worldBuildingId; 
         this.Nome = nome;
         this.Idade = idade;
         this.Genero = genero;
@@ -17,7 +45,20 @@ public class CharacterModel
         this.Peso = peso;
         this.Aparencia = aparencia;
         this.Personalidade = personalidade;
-        this.Historico = historico;
+        this.Historico = historico;  
+        this.Habilidades = habilidades;
+        this.Equipamentos = equipamentos;
+        this.Aliancas = aliancas;
+        this.Relacionamentos = relacionamentos; 
+        this.ComportamentoDominante = comportamentoDominante; 
+        this.ObjetivoPrincipal = objetivoPrincipal;
+        this.Objetivos = objetivos;
+        this.Medos = medos;
+        this.Temperamento = temperamento; 
+        this.Signos = signos; 
+        this.Segredos = segredos;
+        this.Forcas = forcas; 
+        this.Fraquezas = fraquezas; 
         this.Notas = notas;
 
     }
@@ -26,7 +67,12 @@ public class CharacterModel
     [BsonRepresentation(BsonType.ObjectId)]
     public ObjectId Id { get; set; }
 
-    [BsonElement("nome")]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public List<string> BookId { get; set; }
+
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string WorldBuildingId { get; set; }
+
     public string Nome { get; set; }
 
     [BsonElement("idade")]
@@ -68,6 +114,9 @@ public class CharacterModel
     [BsonElement("comportamento_dominante")]
     public List<string> ComportamentoDominante { get; set; }
 
+    [BsonElement("objetivo_principal")]
+    public string ObjetivoPrincipal { get; set; }
+
     [BsonElement("objetivos")]
     public List<string> Objetivos { get; set; }
 
@@ -78,10 +127,7 @@ public class CharacterModel
     public List<string> Temperamento { get; set; }
 
     [BsonElement("signo")]
-    public List<string> Signo { get; set; }
-
-    [BsonElement("signo_ascendente")]
-    public List<string> SignoAscendente { get; set; }
+    public List<string> Signos { get; set; }
 
     [BsonElement("segredos")]
     public List<string> Segredos { get; set; }
