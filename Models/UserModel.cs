@@ -53,12 +53,12 @@ public class ApplicationUser : IdentityUser
 
     public string Country { get; set; }
 
-    [Required]
-    public string Role { get; set; } // Usar enum para os papéis    
-
     public DateTime RegisterDate { get; set; }
 
     public DateTime RegisterUpdate { get; set; }
+
+    [Required]
+    public string Role { get; set; }   
 
 }
 
