@@ -2,21 +2,21 @@ using MongoDB.Driver;
 
 public class UserService
 {
-    private readonly IMongoCollection<UserModel> _users;
+    private readonly IMongoCollection<UserModel> _userCollection;
 
-    public UserService(IMongoClient client, string databaseName)
+    public UserService(IMongoClient client)
     {
-        var database = client.GetDatabase(databaseName);
-        _users = database.GetCollection<UserModel>("Users");
+        var database = client.GetDatabase("GriotsGrimoire");
+        _userCollection = database.GetCollection<UserModel>("Users");
     }
 
     public async Task<UserModel> GetUserByUsername(string username)
     {
-        return await _users.Find(user => user.Username == username).FirstOrDefaultAsync();
+        return await _userCollection.Find(user => user.Username == username).FirstOrDefaultAsync();
     }
 
     public async Task CreateUser(UserModel user)
     {
-        await _users.InsertOneAsync(user);
+        await _userCollection.InsertOneAsync(user);
     }
 }
