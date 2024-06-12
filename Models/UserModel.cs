@@ -8,11 +8,12 @@ using Microsoft.AspNetCore.Identity;
 public class UserModel
 {
 
-    public UserModel(string firstName, string lastName, string email, string password, char genrer, DateTime dateOfBirth, string address, string city, string country, string role, DateTime registerDate, DateTime registerUpdate)
+    public UserModel(string firstName, string lastName, string username, string email, string password, char genrer, DateTime dateOfBirth, string address, string city, string country, string role, DateTime registerDate, DateTime registerUpdate)
     {
         this.Id = ObjectId.GenerateNewId();
         this.FirstName  = firstName;
         this.LastName  = lastName;
+        this.Username = username;
         this.Email = email;
         this.Password = password;
         this.Genrer = genrer;
@@ -34,6 +35,9 @@ public class UserModel
 
     [Required]
     public string LastName { get; set; }
+
+    [Required]
+    public string Username { get; set; }
 
     [Required]
     public string Email { get; set; }

@@ -60,10 +60,12 @@ public class UserController : ControllerBase
         var objectId = ObjectId.Parse(id);
         var filter = Builders<UserModel>.Filter.Eq(u => u.Id, objectId);
         var update = Builders<UserModel>.Update
-            .Set(u => u.Name, user.Name)
+            .Set(u => u.FirstName, user.FirstName)
+            .Set(u => u.LastName, user.LastName)
+            .Set(u => u.Username, user.Username)
             .Set(u => u.Email, user.Email)
             .Set(u => u.Password, user.Password)
-            .Set(u => u.Sex, user.Sex)
+            .Set(u => u.Genrer, user.Genrer)
             .Set(u => u.DateOfBirth, user.DateOfBirth)
             .Set(u => u.RegisterUpdate, DateTime.Now)
             .Set(u => u.Role, user.Role);
