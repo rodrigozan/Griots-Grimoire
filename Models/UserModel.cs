@@ -5,10 +5,10 @@ using MongoDB.Bson.Serialization.Attributes;
 using Microsoft.AspNetCore.Identity;
 
 
-public class ApplicationUser : IdentityUser
+public class UserModel
 {
 
-    public ApplicationUser(string firstName, string lastName, string email, string password, char genrer, DateTime dateOfBirth, string address, string city, string country, string role, DateTime registerDate, DateTime registerUpdate)
+    public UserModel(string firstName, string lastName, string email, string password, char genrer, DateTime dateOfBirth, string address, string city, string country, string role, DateTime registerDate, DateTime registerUpdate)
     {
         this.Id = ObjectId.GenerateNewId();
         this.FirstName  = firstName;
@@ -60,30 +60,4 @@ public class ApplicationUser : IdentityUser
     [Required]
     public string Role { get; set; }   
 
-}
-
-public class RegisterModel
-{
-    [Required]
-    [EmailAddress]
-    public string Email { get; set; }
-
-    [Required]
-    [DataType(DataType.Password)]
-    public string Password { get; set; }
-
-    [DataType(DataType.Password)]
-    [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-    public string ConfirmPassword { get; set; }
-}
-
-public class LoginModel
-{
-    [Required]
-    [EmailAddress]
-    public string Email { get; set; }
-
-    [Required]
-    [DataType(DataType.Password)]
-    public string Password { get; set; }
 }
