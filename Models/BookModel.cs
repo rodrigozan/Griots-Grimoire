@@ -4,8 +4,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 
-public class BookModel
-{
+public class BookModel {
     public BookModel(
         string title, 
         string initialIdea,
