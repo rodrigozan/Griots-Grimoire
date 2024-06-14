@@ -2,17 +2,21 @@ using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using System.Collections.Generic;
+using BCrypt.Net;
 
 [Route("api/[controller]")]
 [ApiController]
 public class UserController : ControllerBase
 {
     private readonly IMongoCollection<UserModel> _userCollection;
+    private readonly IMongoCollection<RegisterModel> _registerCollection;
+
 
     public UserController(IMongoClient mongoClient)
     {
         var database = mongoClient.GetDatabase("GriotsGrimoire");
         _userCollection = database.GetCollection<UserModel>("Users");
+        _registerCollection = database.GetCollection<RegisterModel>("Users");
     }
 
     // GET: api/User
@@ -37,14 +41,15 @@ public class UserController : ControllerBase
 
     // POST: api/User
     [HttpPost]
-    public IActionResult Post([FromBody] UserModel user)
+    public IActionResult Post([FromBody] RegisterModel user)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        _userCollection.InsertOne(user);
+        user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+        _registerCollection.InsertOne(user);
         return CreatedAtRoute("GetUser", new { id = user.Id }, user);
     }
 

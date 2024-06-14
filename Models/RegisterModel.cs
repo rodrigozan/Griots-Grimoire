@@ -5,10 +5,10 @@ using MongoDB.Bson.Serialization.Attributes;
 using Microsoft.AspNetCore.Identity;
 
 
-public class UserModel
+public class RegisterModel
 {
 
-    // public UserModel(string firstName, string lastName, string username, string email, string password, char genrer, DateTime dateOfBirth, string address, string city, string country, string role, DateTime registerDate, DateTime registerUpdate)
+    // public RegisterModel(string firstName, string lastName, string username, string email, string password, char genrer, DateTime dateOfBirth, string address, string city, string country, string role, DateTime registerDate, DateTime registerUpdate)
     // {
     //     this.Id = ObjectId.GenerateNewId();
     //     this.FirstName  = firstName;
@@ -27,7 +27,7 @@ public class UserModel
 
     // }
 
-    public UserModel()
+    public RegisterModel()
     {
         this.Id = ObjectId.GenerateNewId();
         this.RegisterDate = DateTime.Now;
@@ -37,10 +37,6 @@ public class UserModel
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public ObjectId Id { get; set; }
-
-    public string? FirstName { get; set; }
-
-    public string? LastName { get; set; }
 
     [Required]
     public string Username { get; set; }
@@ -52,14 +48,6 @@ public class UserModel
     public string Password { get; set; }
 
     public char? Genrer { get; set; }
-
-    public DateTime? DateOfBirth { get; set; }
-
-    public string? Address { get; set; }
-
-    public string? City { get; set; }
-
-    public string? Country { get; set; }
 
     public DateTime? RegisterDate { get; set; }
 
